@@ -45,5 +45,26 @@ var app = {
         receivedElement.setAttribute('style', 'display:block;');
 
         console.log('Received Event: ' + id);
+
+        var token = getDeviceToken();
+        document.getElementById("token").innnerHTML = token;
     }
+
+    getDeviceToken = function(){
+            if(typeof device != "undefined" && typeof cordova == "object"){
+                var getToken = function(types, success, fail){
+                    cordova.exec(success, fail, "PushToken", "getToken", types);
+                }
+                getToken(["getToken"], function(token){
+                    device.token = token;
+                    return token;
+                 }, function(e){
+                     console.log("cannot get device token: "+e);
+                     return false;
+                 });
+            }else{
+                // console.log("device not ready, or not a native app");
+                return false;
+            }
+        }
 };
