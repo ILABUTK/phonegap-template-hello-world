@@ -67,6 +67,7 @@
                 }
                 getToken(["getToken"], function(token){
                     device.token = token;
+                    console.log(device.token);
                     document.getElementById("token").innnerHTML = device.token; 
                     return token;
                  }, function(e){
